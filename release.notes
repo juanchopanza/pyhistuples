@@ -1,0 +1,70 @@
+!-----------------------------------------------------------------------------
+! Package     : Analysis/PyAna
+! Responsible : Juan Palacios
+! Purpose     : Pure python ntuple and histogram classes and helper code.
+!
+! The package is subject to the Lesser GPL, see doc/COPYING and doc/COPYING.LESSER.
+!-----------------------------------------------------------------------------
+
+!======================= AnalysisPyAna v1r3 2010-11-02 =======================
+
+! 2010-10-01 - Juan Palacios
+ - Added PyAna.pysequence module
+  . Contains helpers for iterable objects.
+ - Increase to v1r3
+
+!======================= AnalysisPyAna v1r2p1 2010-10-04 =====================
+
+! 2010-10-01 - Juan Palacios
+ - python/PyAna/pyntuple/ntuple.py
+  .Fix NTuple documentation.
+ - cmt/requirements
+  . Increase to v1r2p1
+
+!======================= AnalysisPyAna v1r2 2010-06-24 =======================
+
+! 2010-06-17 - Juan Palacios
+ - python/PyAna/pyhistograms.py
+  . Fix histtype.
+ - python/PyAna/pyhistogram/histogram.py
+  . Add Bin.sumWeight2 attribute. Holds sum of squares of bin weights.
+ - python/PyAna/pyhistogram/histostats.py
+  . Add poissonSigma function acting on bins. 
+    Returns sqrt( sum of squares of bin weights)
+ - python/PyAna/pyhistoplots.py
+  . Add errorFunction to histo_plot. For function acting on bins and 
+    returning bin error. 
+  . ntuple_column_histo makes Histogram then plot, to access stats and errors.
+ - cmt/requirements
+  . Increase to v1r2.
+
+!======================= AnalysisPyAna v1r1 2010-06-11 =======================
+
+! 2010-06-14 - Juan Palacios
+ - python/PyAna/pyhistoplots.py
+  . Add stats box to histogram plots.
+ - python/PyAna/pyhistogram/histostats.py
+  . Bug in binned sigma definition.
+
+! 2010-06-11 - Juan Palacios
+ - Some tests were passing that should have failed. Re-implemented them. 
+   Need to take into account special under and overflow bins for histograms.
+
+! 2010-06-09 - Juan Palacios
+ - Added python/PyAna/pyhistoplots.py
+  . Simple helper functions for plotting histograms, ntuple slices and 
+    histograms.
+ - cmt/requirements
+  . Increase version to v1r1.
+
+!======================= AnalysisPyAna v1r0 2010-04-08 =======================
+
+! 2010-03-23 - Juan Palacios
+ - First import to SVN. Contains modules:
+   * pyhistogram
+   * pyntuple
+   Contains also py.tests in tests directory. To run:
+   cd tests
+   py.test
+
+   The package is subject to the Lesser GPL, see COPYING and COPYING.LESSER.
