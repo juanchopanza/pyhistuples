@@ -33,7 +33,7 @@ class pytest(Command) :
 
     def run(self) :
         import py.test
-        tests = [self.test_dir+'/'+t for t in os.listdir(self.test_dir) if t.startswith(self.test_prefix) and t.endswith('.py')]
+        tests = [os.path.join(self.test_dir,t) for t in os.listdir(self.test_dir) if t.startswith(self.test_prefix) and t.endswith('.py')]
         print 'Running tests', tests
         fail = py.test.cmdline.main(tests)
         if fail :
@@ -41,6 +41,9 @@ class pytest(Command) :
             log.error(msg)
             if self.stop_build :
                 raise Exception(msg)
+    # run()
+    
+# class pytest
 
 setup(name='Pyhistuples',
       version='1.0',
