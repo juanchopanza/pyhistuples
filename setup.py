@@ -27,20 +27,20 @@ class pytest(Command) :
         self.test_dir = None
         self.test_prefix = None
         self.stop_build = None
-        
+
     def finalize_options(self) :
         pass
 
     def run(self) :
         import py.test
         tests = [os.path.join(self.test_dir,t) for t in os.listdir(self.test_dir) if t.startswith(self.test_prefix) and t.endswith('.py')]
-        print 'Running tests', tests
+        print 'Running tests', tests, 'stop_build', self.stop_build
         fail = py.test.cmdline.main(tests)
         if fail :
-            msg = '\nERROR: py.test failure in %s/%s*.py. Aborting build.\n'% (self.test_dir, self.test_prefix)
+            msg = '\nERROR: py.test failure in %s/%s*.py.\n'% (self.test_dir, self.test_prefix)
             log.error(msg)
-            if self.stop_build :
-                raise Exception(msg)
+            if self.stop_build==True:
+                raise Exception('Test failure: Abort build')
     # run()
     
 # class pytest
@@ -60,5 +60,5 @@ setup(name='Pyhistuples',
                   'build' : build},
       options = { 'test' : { 'test_dir' : 'test',
                              'test_prefix' : 'test_',
-                             'stop_build' : True},}
+                             'stop_build' : True },    }
      )
