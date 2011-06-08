@@ -7,12 +7,15 @@ License: Lesser GPL, see COPYING and COPYING.LESSER.
 
 Dependencies: 
 
- * py.test for all unit tests.
+ * pytest for all unit tests.
  * matplotlib for histogram plotting.
 
 Build:
 
- * There currently isn't a packaged version or build mechanism. 
+ * Build from compressed tar file or repository snapshot using distutils:
+     python setup.py install
+   For install options, check
+     python setup.py install --help
 
 Status:
 
