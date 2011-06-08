@@ -13,5 +13,4 @@ setup(name='Pyhistuples',
                 'pyhistuples.pyhistogram',
                 'pyhistuples.pyntuple'],
       requires = ['matplotlib', 'pytest'],
-      data_files = [ 'COPYING', 'COPYING.LESSER'],
      )

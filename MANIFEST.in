@@ -1,0 +1,4 @@
+include COPYING*
+include release.notes
+prune release.notes
+prune COPYING*
