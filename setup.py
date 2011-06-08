@@ -45,7 +45,7 @@ class pytest(Command) :
     
 # class pytest
 
-setup(name='Pyhistuples',
+setup(name='pyhistuples',
       version='0.1',
       description='Python Histogram and NTuple',
       author='Juan Palacios',
