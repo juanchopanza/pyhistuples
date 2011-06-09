@@ -39,6 +39,8 @@ def histo_plot(histogram, errorfunction = poissonSigma, stats = default_stats, s
     e = None
     if errorfunction :
         e = [errorfunction(bin) for bin in bins]
+    else :
+        e = [0 for bin in bins]
 
     stat_text = None
     if stats :
