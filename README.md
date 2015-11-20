@@ -14,7 +14,9 @@ but it is on the to-do list. There is a simple persistency mechanism using pytho
 Among things to inversigate is the use of the shelve module for ntuples that are
 too large to keep in memory.
 
-License: Lesser GPL, see COPYING and COPYING.LESSER.
+### License:
+
+Lesser GPL, see COPYING and COPYING.LESSER.
 
 ### Dependencies: 
 
@@ -33,7 +35,10 @@ pip install pyhistuples
 ```
 
 Pip install from repo
+
+```shell
 pip install git+https://github.com/juanchopanza/pyhistuples.git
+```
 
 ### Status:
 
