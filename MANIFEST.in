@@ -1,3 +1,5 @@
+include requirements.txt
+unclude README.md
 include COPYING*
 include release.notes
 prune release.notes

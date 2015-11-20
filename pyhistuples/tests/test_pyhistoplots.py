@@ -4,13 +4,8 @@ Test suite for histogram.axis class.
 
 __author__ = "Juan PALACIOS juan.palacios@nikhef.nl"
 
-import sys, os
-sys.path.append(os.path.abspath('..'))
-
-import math
 from random import gauss
 from pyhistuples.pyntuple.ntuple import NTuple
-from matplotlib import pyplot
 from pyhistuples.pyhistoplots import ntuple_plot, histo_plot, ntuple_column_histo
 
 mu_p = 15.
@@ -26,12 +21,15 @@ for x in xrange(10000) :
     nt.fill('pt', gauss(mu_pt, sigma_pt))
     nt.write()
 
+
 def test_ntuple_plot() :
     pt_plot = ntuple_plot(nt, 'pt', show = False)
     p_plot = ntuple_plot(nt, 'p', errorfunction=lambda x : x.height/2., color = 'red', linewidth='1.5', show = False)
-    
+
+
 def test_ntuple_column_histo():
     h_pt = ntuple_column_histo(nt, 'pt')
+
 
 def test_histo_plot() :
     h_pt = ntuple_column_histo(nt, 'pt')

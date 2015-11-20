@@ -1,65 +1,77 @@
-#!/usr/bin/env python
+'''
+Distribution configuration for pyhistuples
 
-from distutils.core import setup
-from distutils.core import Command
-from distutils import log
-from distutils.command.build import build as _build
-from py import test as pytest
+Copyright (c) 2010 Juan Palacios juan.palacios.puyana@gmail.com
+Subject to the Lesser GNU Public License - see < http://www.gnu.org/licenses/lgpl.html>
+'''
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# pylint: disable=R0801
 import os
+from setuptools import setup
+from setuptools import find_packages
+import pip
+from pip.req import parse_requirements
+from optparse import Option
+from pyhistuples.version import VERSION
 
-class build(_build) :
-    """
-    Make build command run test command.
-    """
-    sub_commands = _build.sub_commands + [('test', lambda self : True)]
 
-class pytest(Command) :
-    """
-    Simple command to run py.test when invoking setup.py test.
-    """
-    
-    user_options = [
-        ('test-dir=', 'd', 'Which directory is the test suite located in?'),
-        ('test-prefix=', 'p', 'Which do test files start with?'),
-        ('stop-build=', 's', 'Stop build if tests fail'),
-        ]
-    def initialize_options(self):
-        self.test_dir = None
-        self.test_prefix = None
-        self.stop_build = None
+def parse_reqs(reqs_file):
+    ''' parse the requirements '''
+    options = Option('--workaround')
+    options.skip_requirements_regex = None
+    # Hack for old pip versions
+    # Versions greater than 1.x have a required parameter "sessions" in
+    # parse_requierements
+    if pip.__version__.startswith('1.'):
+        install_reqs = parse_requirements(reqs_file, options=options)
+    else:
+        from pip.download import PipSession  # pylint:disable=E0611
+        options.isolated_mode = False
+        install_reqs = parse_requirements(reqs_file,  # pylint:disable=E1123
+                                          options=options,
+                                          session=PipSession)
 
-    def finalize_options(self) :
-        pass
+    return [str(ir.req) for ir in install_reqs]
 
-    def run(self) :
-        import py.test
-        tests = [os.path.join(self.test_dir,t) for t in os.listdir(self.test_dir) if t.startswith(self.test_prefix) and t.endswith('.py')]
-        print 'Running tests', tests, 'stop_build', self.stop_build
-        fail = py.test.cmdline.main(tests)
-        if fail :
-            msg = '\nERROR: py.test failure in %s/%s*.py.\n'% (self.test_dir, self.test_prefix)
-            log.error(msg)
-            if self.stop_build==True:
-                raise Exception('Test failure: Abort build')
-    # run()
-    
-# class pytest
 
-setup(name='pyhistuples',
-      version='0.1',
-      description='Python Histogram and NTuple',
-      author='Juan Palacios',
-      author_email='juan.palacios.puyana@gmail.com',
-      url='https://github.com/juanchopanza/pyhistuples',
-      license = 'LGPL',
-      long_description=open('README').read(),
-      packages=['pyhistuples',
-                'pyhistuples.pyhistogram',
-                'pyhistuples.pyntuple'],
-      requires = ['matplotlib', 'pytest'],
-      cmdclass = {'test' : pytest,
-                  'build' : build},
-      options = { 'test' : { 'test_dir' : 'test',
-                             'test_prefix' : 'test_',
-                             'stop_build' : True },    }
-     )
+BASEDIR = os.path.dirname(os.path.abspath(__file__))
+REQS = parse_reqs(os.path.join(BASEDIR, 'requirements.txt'))
+
+EXTRA_REQS_PREFIX = 'requirements_'
+EXTRA_REQS = {}
+
+for file_name in os.listdir(BASEDIR):
+    if not file_name.startswith(EXTRA_REQS_PREFIX):
+        continue
+    base_name = os.path.basename(file_name)
+    (extra, _) = os.path.splitext(base_name)
+    extra = extra[len(EXTRA_REQS_PREFIX):]
+    EXTRA_REQS[extra] = parse_reqs(file_name)
+
+config = {
+    'description': 'pyhistuples: a light-weight ntuple and histogram package',
+    'author': 'Juan Palacios',
+    'url': 'http://https://github.com/juanchopanza/pyhistuples',
+    'author_email': 'juan.palacios.puyana@gmail.com',
+    'version': VERSION,
+    'install_requires': REQS,
+    'extras_require': EXTRA_REQS,
+    'packages': find_packages(),
+    'license': 'LGPL',
+    'scripts': [],
+    'name': 'pyhistuples',
+    'include_package_data': True,
+}
+
+setup(**config)

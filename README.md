@@ -18,15 +18,22 @@ License: Lesser GPL, see COPYING and COPYING.LESSER.
 
 ### Dependencies: 
 
-* `pytest` for all unit tests.
+* `nose` for all unit tests.
 * `matplotlib` for histogram plotting.
 
-### Build:
+### Installation:
 
-* Build from compressed tar file or repository snapshot using distutils:
-     python setup.py install
-   For install options, check
-     python setup.py install --help
+This assumes `matplotlib` has already been installed into the system. 
+
+Clone repoo and pip install from source:
+
+```shell
+git clone https://github.com/juanchopanza/pyhistuples.git
+pip install pyhistuples 
+```
+
+Pip install from repo
+pip install git+https://github.com/juanchopanza/pyhistuples.git
 
 ### Status:
 
