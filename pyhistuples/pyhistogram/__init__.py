@@ -1,1 +1,1 @@
-
+"""Main hostogram module"""

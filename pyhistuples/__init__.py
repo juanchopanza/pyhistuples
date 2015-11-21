@@ -1,1 +1,1 @@
-
+"""pyhistuples module"""
